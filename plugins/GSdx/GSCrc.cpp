@@ -132,6 +132,7 @@ CRC::Game CRC::m_games[] =
 	{0xB049DD5E, OnePieceGrandBattle, US, 0},
 	{0x5D02CC5B, OnePieceGrandBattle, NoRegion, 0},
 	{0x6F8545DB, ICO, US, 0},
+	{0x48CDF317, ICO, US, 0}, // Demo
 	{0xB01A4C95, ICO, JP, 0},
 	{0x2DF2C1EA, ICO, KO, 0},
 	{0x5C991F4E, ICO, EU, 0},
@@ -360,6 +361,7 @@ CRC::Game CRC::m_games[] =
 	{0xB1995E29, ShadowofRome, EU, 0}, // cutie comment
 	{0x958DCA28, ShadowofRome, EU, 0},
 	{0x57818AF6, ShadowofRome, US, 0},
+	{0x1E210E60, ShadowofRome, US, 0}, // Demo
 	{0xF21EE6E0, CrashNburn, US, 0},
 	{0x54A548B4, CrashNburn, EU, 0},
 	{0x694A998E, TombRaiderUnderworld, JP, 0}, // cutie comment
@@ -447,6 +449,7 @@ CRC::Game CRC::m_games[] =
 	{0xE21404E2, GetaWay, US, 0},
 	{0x458485EF, GetaWay, EU, 0},
 	{0xE78971DF, GetaWayBlackMonday, US, 0},
+	{0x342D97FA, GetaWayBlackMonday, US, 0}, // Demo
 	{0xE8C0AD1A, GetaWayBlackMonday, JP, 0},
 	{0x09C3DF79, GetaWayBlackMonday, EU, 0},
 	{0x1130BF23, SakuraTaisen, CH, 0}, // cutie comment
