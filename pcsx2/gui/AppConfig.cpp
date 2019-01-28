@@ -817,6 +817,7 @@ AppConfig::GSWindowOptions::GSWindowOptions()
 	DisableScreenSaver		= true;
 
 	AspectRatio				= AspectRatio_4_3;
+	FMVAspectRatioSwitch	= FMV_AspectRatio_Switch_Off;
 	Zoom					= 100;
 	StretchY				= 100;
 	OffsetX					= 0;
@@ -829,7 +830,6 @@ AppConfig::GSWindowOptions::GSWindowOptions()
 	EnableVsyncWindowFlag	= false;
 
 	IsToggleFullscreenOnDoubleClick = true;
-	IsToggleAspectRatioSwitch = false;
 }
 
 void AppConfig::GSWindowOptions::SanityCheck()
@@ -868,7 +868,6 @@ void AppConfig::GSWindowOptions::LoadSave( IniInterface& ini )
 	IniEntry( EnableVsyncWindowFlag );
 
 	IniEntry( IsToggleFullscreenOnDoubleClick );
-	IniEntry( IsToggleAspectRatioSwitch );
 
 	static const wxChar* AspectRatioNames[] =
 	{
@@ -880,6 +879,17 @@ void AppConfig::GSWindowOptions::LoadSave( IniInterface& ini )
 	};
 
 	ini.EnumEntry( L"AspectRatio", AspectRatio, AspectRatioNames, AspectRatio );
+
+	static const wxChar* FMVAspectRatioSwitchNames[] =
+	{
+		L"Off",
+		L"4:3",
+		L"16:9",
+		// WARNING: array must be NULL terminated to compute it size
+		NULL
+	};
+	ini.EnumEntry(L"FMVAspectRatioSwitch", FMVAspectRatioSwitch, FMVAspectRatioSwitchNames, FMVAspectRatioSwitch);
+
 	IniEntry( Zoom );
 
 	if( ini.IsLoading() ) SanityCheck();
@@ -1035,13 +1045,13 @@ bool AppConfig::IsOkApplyPreset(int n)
 	switch (n){	//currently implemented such that any preset also applies all lower presets, with few exceptions.
 
 		case 5 :	//Set VU cycle steal to 2 clicks (maximum-1)
-					vuUsed?0:(vuUsed=true, EmuOptions.Speedhacks.VUCycleSteal = 2);
+					vuUsed?0:(vuUsed=true, EmuOptions.Speedhacks.EECycleSkip = 2);
 		
 		case 4 :	//set EE cyclerate to 2 clicks (maximum)
 					eeUsed?0:(eeUsed=true, EmuOptions.Speedhacks.EECycleRate = -2);
 
 		case 3 :	//Set VU cycle steal to 1 click, set VU clamp mode to 'none'
-					vuUsed?0:(vuUsed=true, EmuOptions.Speedhacks.VUCycleSteal = 1);
+					vuUsed?0:(vuUsed=true, EmuOptions.Speedhacks.EECycleSkip = 1);
 					EmuOptions.Cpu.Recompiler.vuOverflow	  =
 					EmuOptions.Cpu.Recompiler.vuExtraOverflow =
 					EmuOptions.Cpu.Recompiler.vuSignOverflow = false; //VU Clamp mode to 'none'
@@ -1098,7 +1108,7 @@ void RelocateLogfile()
 	if( emuLog == NULL )
 	{
 		emuLogName = newlogname;
-		emuLog = fopen( emuLogName.ToUTF8(), "wb" );
+		emuLog = wxFopen( emuLogName, "wb" );
 	}
 
 	wxGetApp().EnableAllLogging();
